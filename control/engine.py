@@ -26,6 +26,8 @@ class Engine:
         with self.db() as db:
             db.executescript("CREATE TABLE IF NOT EXISTS runs(id INTEGER PRIMARY KEY, created TEXT, fingerprint TEXT, data TEXT); CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY, created TEXT, kind TEXT, detail TEXT); CREATE TABLE IF NOT EXISTS decisions(run INTEGER, fix TEXT, decision TEXT, actor TEXT, created TEXT, PRIMARY KEY(run,fix)); CREATE TABLE IF NOT EXISTS pull_requests(run INTEGER PRIMARY KEY, url TEXT);")
             db.executescript("CREATE TABLE IF NOT EXISTS settings(key TEXT PRIMARY KEY,value TEXT); CREATE TABLE IF NOT EXISTS rule_reviews(fingerprint TEXT, rule TEXT, status TEXT, evidence TEXT, actor TEXT, PRIMARY KEY(fingerprint,rule));")
+        from control.workflow import Workflow
+        self.workflow = Workflow(self)
 
     def selected_checklist(self):
         with self.db() as db:

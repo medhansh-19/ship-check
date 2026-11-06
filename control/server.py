@@ -51,7 +51,7 @@ def serve(engine, port=8787, interval=15, notifier=None):
                 selected = engine.selected_checklist()
                 if event and event.get("checklist") != selected:
                     event = None
-                return self.send(200, dict(**engine.state(), csrf=token, watch_seconds=interval, discord=bool(notifier), event=event, checklists=rules.available(engine.repo), selected_checklist=selected))
+                return self.send(200, dict(**engine.state(), workflow=engine.workflow.state(), csrf=token, watch_seconds=interval, discord=bool(notifier), event=event, checklists=rules.available(engine.repo), selected_checklist=selected))
             files = {"/": ("index.html", "text/html"), "/app.js": ("app.js", "text/javascript"), "/style.css": ("style.css", "text/css")}
             if path not in files:
                 return self.send(404, {"error": "Not found"})
@@ -88,6 +88,9 @@ def serve(engine, port=8787, interval=15, notifier=None):
                     result = engine.review_rule(data["run"], data["rule"], data["status"], data["evidence"], "Local owner")
                     if notifier:
                         notifier(result)
+                elif path == "/api/session":
+                    engine.workflow.new()
+                    result = {"workflow":engine.workflow.state()}
                 else:
                     return self.send(404, {"error": "Not found"})
                 self.send(200, result)

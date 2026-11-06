@@ -9,7 +9,7 @@ export function equalSecret(value,expected){
 export default async function handler(req,res){
   res.setHeader('Cache-Control','no-store');
   const action=req.query?.action;
-  const writes=new Set(['audit','decision','pr','checklist','rule-review']);
+  const writes=new Set(['audit','decision','pr','checklist','rule-review','session']);
   const read=req.method==='GET'&&action==='state';
   if(!read&&!(req.method==='POST'&&writes.has(action)))return res.status(404).json({error:'Not found'});
   if(!read&&!equalSecret(req.headers['x-ship-check-owner'],process.env.SHIP_CHECK_OWNER_KEY))return res.status(401).json({error:'Owner access required. Use Unlock owner controls and enter your owner key.'});

@@ -10,8 +10,34 @@ def start(engine):
     owner = int(os.environ["DISCORD_OWNER_ID"])
     channel_id = int(os.environ["DISCORD_CHANNEL_ID"])
     intents = discord.Intents.default()
+    intents.message_content = True
     client = discord.Client(intents=intents)
     ready = threading.Event()
+
+    @client.event
+    async def on_message(message):
+        if message.channel.id != channel_id:
+            return
+        actor = None
+        if message.author.id == owner:
+            actor = "owner"
+        elif message.webhook_id:
+            hooks = await message.channel.webhooks()
+            trusted = next((hook for hook in hooks if hook.id == message.webhook_id and hook.user and hook.user.id == client.user.id),None)
+            if trusted:
+                name = message.author.name.lower()
+                if "scout" in name: actor="scout"
+                elif "auditor" in name: actor="auditor"
+        if not actor:
+            return
+        text = message.content
+        for embed in message.embeds:
+            if embed.description:
+                text += "\n" + embed.description
+        for attachment in message.attachments:
+            if attachment.filename.endswith((".md",".txt")) and attachment.size < 200000:
+                text += "\n" + (await attachment.read()).decode(errors="replace")
+        await asyncio.to_thread(engine.workflow.observe,message.id,actor,text,message.created_at.isoformat())
 
     class Controls(discord.ui.View):
         def __init__(self, run):
