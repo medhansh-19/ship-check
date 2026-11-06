@@ -10,8 +10,7 @@ TASKS = [
 
 
 def summarize(tasks):
-    # Intentional rehearsal bug: counts every task as completed.
-    completed = len(tasks)
+    completed = sum(task["status"] == "done" for task in tasks)
     return {"total": len(tasks), "completed": completed, "open": len(tasks) - completed}
 
 
