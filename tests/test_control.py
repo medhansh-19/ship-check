@@ -31,6 +31,12 @@ class ControlTests(unittest.TestCase):
         self.assertIn("requirements.txt", check["evidence"])
         self.assertEqual(Engine(self.repo, self.root / "state.sqlite3").state()["run"]["id"], state["run"]["id"])
 
+    def test_discord_controls_are_scoped_to_the_checkout(self):
+        other = Engine(self.root / "other-checkout", self.root / "other.sqlite3")
+        self.assertNotEqual(other.namespace, self.engine.namespace)
+        same = Engine(self.repo, self.root / "state.sqlite3")
+        self.assertEqual(same.namespace, self.engine.namespace)
+
     def test_approval_is_bound_to_repository_bytes(self):
         run = self.engine.audit()["run"]
         self.engine.decide(run["id"], "setup-reference", "approved", "owner")

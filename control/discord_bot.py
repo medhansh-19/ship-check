@@ -20,7 +20,7 @@ def start(engine):
                 fix = check["proposal"]
                 if not fix:
                     continue
-                button = discord.ui.Button(label="Review " + fix["path"], custom_id=f"shipcheck:{run['id']}:{fix['id']}", style=discord.ButtonStyle.secondary)
+                button = discord.ui.Button(label="Review " + fix["path"], custom_id=f"shipcheck:{engine.namespace}:{run['id']}:{fix['id']}", style=discord.ButtonStyle.secondary)
                 async def review(interaction, proposal=fix, run_id=run["id"]):
                     if interaction.user.id != owner:
                         return await interaction.response.send_message("Only the configured project owner can approve fixes.", ephemeral=True)
@@ -42,7 +42,7 @@ def start(engine):
                     await interaction.response.send_message(proposal["summary"], file=discord.File(io.BytesIO(diff.encode()), filename="proposed-change.diff"), view=view, ephemeral=True)
                 button.callback = review
                 self.add_item(button)
-            rerun = discord.ui.Button(label="Run audit", custom_id=f"shipcheck:audit:{run['id']}", style=discord.ButtonStyle.primary)
+            rerun = discord.ui.Button(label="Run audit", custom_id=f"shipcheck:{engine.namespace}:audit:{run['id']}", style=discord.ButtonStyle.primary)
             async def audit(interaction):
                 if interaction.user.id != owner:
                     return await interaction.response.send_message("Owner only.", ephemeral=True)
@@ -52,7 +52,7 @@ def start(engine):
                 await interaction.followup.send("Fresh evidence posted in this channel.", ephemeral=True)
             rerun.callback = audit
             self.add_item(rerun)
-            pr = discord.ui.Button(label="Create approved PR", custom_id=f"shipcheck:pr:{run['id']}", style=discord.ButtonStyle.success)
+            pr = discord.ui.Button(label="Create approved PR", custom_id=f"shipcheck:{engine.namespace}:pr:{run['id']}", style=discord.ButtonStyle.success)
             async def create_pr(interaction):
                 if interaction.user.id != owner:
                     return await interaction.response.send_message("Owner only.", ephemeral=True)
@@ -68,7 +68,7 @@ def start(engine):
     async def publish(state):
         run = state["run"]
         channel = client.get_channel(channel_id) or await client.fetch_channel(channel_id)
-        embed = discord.Embed(title="Ship Check · launch readiness", description=f"**{run['passed']}/{run['total']} checks passed** · `{run['branch']}` · `{run['commit']}`", color=0x17583F)
+        embed = discord.Embed(title="Ship Check · launch readiness", description=f"**{run['repo']}**\n**{run['passed']}/{run['total']} checks passed** · `{run['branch']}` · `{run['commit']}`", color=0x17583F)
         for check in run["checks"][:18]:
             embed.add_field(name=(check["status"].replace('_',' ').upper() + " · " + check["title"])[:160], value=check["evidence"][:100], inline=False)
         if len(run["checks"]) > 18:

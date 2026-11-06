@@ -19,6 +19,7 @@ class Engine:
     def __init__(self, repo, database, demo_url=""):
         self.repo = Path(repo).resolve()
         self.database = str(database)
+        self.namespace = hashlib.sha256((str(self.repo) + self.database).encode()).hexdigest()[:12]
         Path(database).parent.mkdir(parents=True, exist_ok=True)
         self.demo_url = demo_url
         self.lock = threading.RLock()

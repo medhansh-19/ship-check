@@ -1,5 +1,9 @@
 # Demo walkthrough — approximately 3 minutes
 
+Use the [prepared Launch Ledger target and exact prompts](DEMO_TARGET.md) for a
+fresh recording with the real Switch event. Its failures are deliberately seeded
+and verified. Ship Check remains the actual hackathon entry.
+
 ## V2 opening — add 45 seconds
 
 Open http://127.0.0.1:8787. Show real blockers, source-labelled deadline and
