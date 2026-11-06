@@ -46,6 +46,9 @@ them synchronized when editing.
 - The scoped GitHub App opened PR #1 with only the approved three files.
 - Corrected setup printed `Ready to ship.`; the owner separately approved merging.
 - Only auditor has GitHub write access, limited to the selected repository.
+- The Discord bridge is active and created `#ship-check-demo` with both agents
+  attached. Discord API read-back confirmed each agent's greeting message; see
+  the [Discord setup receipt](../docs/DISCORD_SETUP.md).
 
 ## Deliberate limits and unverified checks
 

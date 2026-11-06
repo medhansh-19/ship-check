@@ -5,8 +5,11 @@ Ship Check puts quoted rules, fresh-clone evidence and human-approved fixes in a
 
 **Status:** live workflow verified on 6 November 2026: scout checklist handoff →
 fresh-clone audit → owner approval of fixes 1, 2 and 4 → scoped GitHub App PR →
-owner-approved merge. See [PR #1](https://github.com/medhansh-19/ship-check/pull/1)
-and [the captured audit evidence](examples/audit-evidence/README.md).
+owner-approved merge. A Discord bridge is also live: Switch created the
+`#ship-check-demo` channel and both agents posted their greetings there. See
+[PR #1](https://github.com/medhansh-19/ship-check/pull/1),
+[the captured audit evidence](examples/audit-evidence/README.md), and the
+[Discord setup receipt](docs/DISCORD_SETUP.md).
 The PR targets the isolated demo branch; its deliberately broken fixture never
 replaces this project's main branch.
 **Demo video:** pending recording and upload.
@@ -66,7 +69,8 @@ rendered only by JavaScript; paste a source-labelled rules file when necessary.
    Do not rely on shell-profile credentials being available to agents.
 4. Import [ship-check.template.yaml](switch/ship-check.template.yaml) on the
    Console's Templates page. Enter a unique `team` prefix and GitHub `owner/name`.
-   Choose Mattermost if desired; `$first` means the server's default bridge.
+   Choose Mattermost or the connected Discord bridge; `$first` means the
+   server's default bridge.
 5. Review each agent's machine and directory **before creation**. Defaults are
    separate folders under Switch's agents directory. To use this checkout's
    `scout/` and `audit/`, set their absolute paths in Advanced. The template embeds

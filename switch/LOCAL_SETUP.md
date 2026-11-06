@@ -13,6 +13,9 @@
 - [PR #1](https://github.com/medhansh-19/ship-check/pull/1) completed the real audit,
   numbered approval and owner-approved merge into the isolated demo branch.
 - [Audit evidence](../examples/audit-evidence/README.md) records the observed results.
+- Discord bridge `Ship Check Demo` is active. Switch created `#ship-check-demo`
+  and attached both final agents; each posted a greeting under its own name.
+  See the [Discord setup receipt](../docs/DISCORD_SETUP.md).
 
 ## Restart and HTTPS limitation
 

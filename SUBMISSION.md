@@ -11,6 +11,7 @@ reports real failures, and opens a scoped PR for explicitly approved fixes.
 - Reusable room: [Switch YAML](switch/ship-check.template.yaml).
 - Setup: [README](README.md), [verified local environment](switch/LOCAL_SETUP.md).
 - Evidence: [live audit receipt](examples/audit-evidence/README.md).
+- Discord: [verified bridge and channel](docs/DISCORD_SETUP.md).
 
 ## What worked
 
@@ -23,6 +24,9 @@ and merged into the isolated demo branch, preserving the main project.
 
 Switch supplies the shared checklist, evidence and decision history; the helper
 scripts alone cannot provide the team handoff or scoped agent connection.
+The same workflow now runs in a real Discord server. Switch created the
+`#ship-check-demo` channel, attached Scout and Auditor, and delivered both agent
+greetings through Discord webhooks under their own names.
 
 ## Event evidence
 
