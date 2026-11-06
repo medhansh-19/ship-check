@@ -38,6 +38,11 @@ class Workflow:
             data["activity"].append(entry)
             data["activity"]=data["activity"][-100:]
             if actor=="owner":
+                target=re.search(r"https://github\.com/([A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)",text)
+                branch=re.search(r"\bbranch\s+`?([A-Za-z0-9_./-]+)",text,re.I)
+                event=re.search(r"(?:Event|Hackathon):\s*(https?://\S+)",text,re.I)
+                if target:
+                    data["target"]={"repository":target.group(1).removesuffix('.git'),"branch":branch.group(1) if branch else None,"event_url":event.group(1) if event else None}
                 if re.search(r"scout",text,re.I): data["stages"]["scout"]="working"
                 if re.search(r"auditor|@audit\b",text,re.I): data["stages"]["auditor"]="working"
             elif actor=="scout":

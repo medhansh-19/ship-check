@@ -11,6 +11,13 @@ class WorkflowTests(unittest.TestCase):
         self.assertEqual(self.engine.workflow.state()['activity'],[])
         self.assertEqual(self.engine.workflow.state()['rules'],[])
 
+    def test_owner_can_select_another_repository_without_old_event(self):
+        self.engine.workflow.observe('target','owner','@shipcheck-auditor Audit https://github.com/medhansh-19/Afterglow branch main')
+        target=self.engine.workflow.state()['target']
+        self.assertEqual(target['repository'],'medhansh-19/Afterglow')
+        self.assertEqual(target['branch'],'main')
+        self.assertIsNone(target['event_url'])
+
     def test_messages_progress_and_deduplicate(self):
         workflow=self.engine.workflow
         workflow.observe('1','owner','@shipcheck-scout check rules')
