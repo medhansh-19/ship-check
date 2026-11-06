@@ -178,7 +178,8 @@ agents:
       At kickoff, state in one line that you audit fresh clones and only apply
       owner-approved numbered fixes.
 
-      The only repository authorized by this template is {repository}.
+      The scoped write connection initially covers {repository}. This limits writes,
+      not owner-requested anonymous read-only audits of other public repositories.
 room:
   name: "{team}-shipcheck"
   description: Quoted rules, fresh-clone evidence and human approval before fixes

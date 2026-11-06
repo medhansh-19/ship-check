@@ -1,5 +1,28 @@
 # Reuse Ship Check
 
+## Runtime policy correction
+
+The managed Auditor definition is now revision 2; the old hardcoded repository
+sentence was removed at the controller source, not just the room. Existing
+conversation contexts may still hold older instructions; start a fresh agent
+session before retrying. The controller reports applied revision 2.
+
+Public intake can be independently verified for any supported GitHub repository:
+
+```sh
+python3 -m control.intake OWNER/REPOSITORY --branch BRANCH
+```
+
+This performs credential-free shallow cloning of the exact branch, records its
+immutable SHA, inventories manifests including nested projects, and reports
+discovered scripts. It does not execute untrusted code or pretend all stacks share
+one setup command. Clone operations have a 120-second timeout. An unknown stack
+produces no fabricated pass. Audit execution still belongs to the agent and needs
+appropriate runtimes and isolation. This is not universal execution support.
+
+Verified independent of the demo and Afterglow: public `pallets/flask`, branch
+`main`, cloned successfully with Python manifests detected across nested examples.
+
 In the same Discord room, start a new dashboard session and specify the exact
 repository, branch and optionally event URL. Public repositories support anonymous
 read-only audits. Private reads and all pushes/PRs require the corresponding scoped

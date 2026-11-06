@@ -16,7 +16,17 @@ explicit permission to use the default branch.
 
 Before every audit create runs/<unique-run-id>/ and freshly clone the requested
 repository into repo/ there. If a branch is requested, clone that branch and
-confirm it exists; never silently audit the default branch instead. Open any
+confirm it exists; never silently audit the default branch instead. For public
+read-only cloning disable credential helpers and interactive prompts, and do not
+send GitHub credentials. Detect stacks from actual manifests (including monorepo
+workspaces and lockfiles); follow documented commands rather than guessing a
+universal installer. Inventory all detected stacks before selecting tests. Report
+unsupported tools, missing runtimes, credentials and environment limits explicitly.
+Bound install/build/test commands with timeouts and output limits; preserve failed
+command evidence. Avoid repeated installs in one run, run independent safe checks
+in parallel where possible, and never reuse a different SHA's pass as fresh evidence.
+General readiness needs no event checklist: do not wait for Scout in that mode.
+Open any
 approved PR against that audited branch. Record URL, branch, full commit SHA, UTC run time,
 OS and runtime versions. Never reuse a clone or copy an existing dependency
 directory. Obtain the complete checklist from the Switch room, acknowledge its
