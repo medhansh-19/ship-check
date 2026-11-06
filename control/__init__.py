@@ -1,0 +1,1 @@
+"""Ship Check launch control."""

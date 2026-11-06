@@ -3,6 +3,20 @@
 Hackathon teams lose points to broken setup instructions and missed submission rules.
 Ship Check puts quoted rules, fresh-clone evidence and human-approved fixes in a Switch room.
 
+## V2: launch control
+
+A live dashboard now shows repository checks, evidence, blockers and an approval
+queue. File changes trigger automatic rechecks. Discord receives reports with
+owner-only buttons to review exact changes, approve or reject, rerun checks and
+create a scoped PR from approved fixes. Decisions become stale when files change.
+
+```sh
+python3 -m control.server --repo .
+```
+
+Open **http://127.0.0.1:8787**. See [V2 setup and verification](control/README.md)
+for Discord configuration, supported checks and the GitHub CLI requirement.
+
 **Status:** live workflow verified on 6 November 2026: scout checklist handoff →
 fresh-clone audit → owner approval of fixes 1, 2 and 4 → scoped GitHub App PR →
 owner-approved merge. A Discord bridge is also live: Switch created the

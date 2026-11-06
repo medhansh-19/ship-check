@@ -1,5 +1,16 @@
 # Demo walkthrough — approximately 3 minutes
 
+## V2 opening — add 45 seconds
+
+Open http://127.0.0.1:8787. Show real blockers, source-labelled deadline and
+evidence beside each check. Click Run audit, then show the Discord report and
+owner controls. In a disposable broken checkout, review an exact proposed fix,
+reject one and approve another. Change a file and show the automatic recheck
+resetting approval. Use the existing V1 PR for the live GitHub result; V2's
+new PR path has isolated integration-test evidence, not a live rehearsal yet.
+
+## Agent workflow
+
 1. **Problem (20 seconds):** Show Ship Check's README. Explain that teams can
    finish a product while leaving setup broken or missing a submission rule.
 2. **Discord room (35 seconds):** Open the Ship Check Demo server and

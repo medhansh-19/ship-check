@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "uizze.visual-evidence.v1",
+  "platform": "web",
+  "scope": "V2 desktop dashboard and exact-change review. Target 1487x1058; Safari screenshot 2940x1846 at Retina scale. Direction comparison only, not pixel-perfect.",
+  "comparison": "target",
+  "target": {"path":"target.png","kind":"image","sha256":"e696f2180ab3aa3c00c9c89a85269308edb6a3c255a8a8811678d1772ae3f281"},
+  "sources": [
+    {"path":"../../control/static/index.html","sha256":"8f517e9afd83809ba1e6845f7c85d6c74bc51d50ecf321376d16cf1212b39619"},
+    {"path":"../../control/static/style.css","sha256":"e8cdd484f2c4f94a89e5419476db7f48c56205c64d761e074ba70df765ee32da"},
+    {"path":"../../control/static/app.js","sha256":"4212cb0215c99c288371c0a729ef336cdeaa171ff6e8f88ea3f8ccd4750865a7"}
+  ],
+  "requiredChecks": [{"id":"desktop","kind":"visual"},{"id":"review","kind":"interaction"},{"id":"mobile","kind":"visual"}],
+  "checks": [
+    {"id":"desktop","status":"pass","state":"Real project, 5/6 checks, video missing.","environment":{"kind":"browser","name":"Safari","width":1470,"height":835},"observed":"Readable two-column operational layout, consistent green accent and clear primary action; deadline labels saved-source provenance. Header uses two lines instead of generated target's one line.","artifacts":[{"path":"dashboard.png","kind":"image","sha256":"cb5f04d257537586168e7b5c77f4d3d40bd8d146d7e3b96fb9018c5d3f1ac0b7"}]},
+    {"id":"review","status":"pass","state":"Isolated fixture review and recheck.","environment":{"kind":"browser","name":"Safari","width":1470,"height":835},"observed":"Exact before/after text readable. Rejection recorded without edits; separate approval enabled PR control. File change triggered 2/6 to 3/6 and reset approvals; browser refreshed to inspect watcher result.","steps":["Run manual audit","Reject README proposal","Approve draft in disposable fixture","Add missing requirements file","Verify automatic run and approval reset"],"artifacts":[{"path":"review.png","kind":"image","sha256":"dcc41c40abeeb3e18a27cfc8e3a7a78d89edc8f75ba58689b62cc7f502e07d9e"},{"path":"recheck.png","kind":"image","sha256":"c3aac53de724293be9fc7cde8715b5538edde225ba80e5cb6df14941aad8a128"}]},
+    {"id":"mobile","status":"blocked","state":"Responsive CSS not visually verified at narrow width.","environment":{"kind":"browser","name":"unavailable","width":390,"height":844},"observed":"Local browser extension disabled; native Safari used for desktop, without programmatic viewport control.","artifacts":[]}
+  ],
+  "unresolved": ["Narrow viewport visual verification pending.","Different target and render dimensions; no 1:1 fidelity claim."]
+}

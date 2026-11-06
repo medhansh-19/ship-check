@@ -15,6 +15,11 @@ reports real failures, and opens a scoped PR for explicitly approved fixes.
 
 ## What worked
 
+V2 adds a launch-control dashboard with persistent checks and evidence, file-change
+rechecks, an exact-change approval ledger and isolated PR generation. Discord
+reports include owner-only review, audit and PR controls. Repository changes
+invalidate old approvals. See [V2 setup and verification](control/README.md).
+
 The room completed checklist handoff, a fresh-clone audit, human approval and a
 GitHub App PR limited to one repository. The owner selected fixes 1, 2 and 4,
 including MIT licensing, and deferred the missing-video fix. Only README,
