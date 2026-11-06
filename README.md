@@ -21,6 +21,9 @@ python3 -m control.server --repo .
 Open **http://127.0.0.1:8787**. See [V2 setup and verification](control/README.md)
 for Discord configuration, supported checks and the GitHub CLI requirement.
 
+Hosted dashboard: **https://ship-check-ivory.vercel.app**. It connects to the
+owner's local audit runner; [deployment and restart instructions](docs/VERCEL.md).
+
 **Status:** live workflow verified on 6 November 2026: scout checklist handoff →
 fresh-clone audit → owner approval of fixes 1, 2 and 4 → scoped GitHub App PR →
 owner-approved merge. A Discord bridge is also live: Switch created the

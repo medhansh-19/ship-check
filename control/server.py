@@ -18,6 +18,10 @@ def serve(engine, port=8787, interval=15, notifier=None):
     static = Path(__file__).parent / "static"
 
     class Handler(BaseHTTPRequestHandler):
+        def relay_authorized(self):
+            expected = os.environ.get("SHIP_CHECK_RELAY_SECRET", "")
+            return bool(expected) and hmac.compare_digest(self.headers.get("Authorization", ""), "Bearer " + expected)
+
         def log_message(self, *args):
             pass
 
@@ -33,9 +37,14 @@ def serve(engine, port=8787, interval=15, notifier=None):
             self.wfile.write(data)
 
         def do_GET(self):
-            if self.headers.get("Host") not in (f"localhost:{port}", f"127.0.0.1:{port}"):
-                return self.send(403, {"error": "Local access only."})
             path = urlparse(self.path).path
+            relay = path.startswith("/api/relay/")
+            if relay and not self.relay_authorized():
+                return self.send(403, {"error": "Relay authentication required."})
+            if not relay and self.headers.get("Host") not in (f"localhost:{port}", f"127.0.0.1:{port}"):
+                return self.send(403, {"error": "Local access only."})
+            if relay:
+                path = path.replace("/api/relay/", "/api/", 1)
             if path == "/api/state":
                 event_file = engine.repo / "control/event.json"
                 event = json.loads(event_file.read_text()) if event_file.is_file() else None
@@ -50,14 +59,19 @@ def serve(engine, port=8787, interval=15, notifier=None):
             self.send(200, (static / name).read_text(), mime)
 
         def do_POST(self):
-            if not hmac.compare_digest(self.headers.get("X-Ship-Check", ""), token):
+            path = urlparse(self.path).path
+            relay = path.startswith("/api/relay/")
+            if relay and not self.relay_authorized():
+                return self.send(403, {"error": "Relay authentication required."})
+            if not relay and not hmac.compare_digest(self.headers.get("X-Ship-Check", ""), token):
                 return self.send(403, {"error": "Reload the dashboard before changing state."})
             try:
                 length = int(self.headers.get("Content-Length", "0"))
                 if not 0 < length < 16384:
                     raise ValueError("Invalid request size")
                 data = json.loads(self.rfile.read(length))
-                path = urlparse(self.path).path
+                if relay:
+                    path = path.replace("/api/relay/", "/api/", 1)
                 if path == "/api/audit":
                     result = engine.audit()
                     if notifier:

@@ -6,3 +6,6 @@ __pycache__/
 .env.*
 *.pem
 audit/runs/
+.vercel/
+public/
+node_modules/

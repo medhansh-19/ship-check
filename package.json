@@ -1,0 +1,7 @@
+{
+  "name": "ship-check-dashboard",
+  "private": true,
+  "type": "module",
+  "scripts": {"build": "node scripts/build_dashboard.mjs", "test:cloud": "node --test tests/test_gateway.mjs"},
+  "engines": {"node": "22.x"}
+}

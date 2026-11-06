@@ -1,0 +1,12 @@
+*
+!api
+!api/**
+!control
+control/*
+!control/static
+!control/static/**
+!scripts
+scripts/*
+!scripts/build_dashboard.mjs
+!package.json
+!vercel.json
