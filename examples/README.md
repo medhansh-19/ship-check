@@ -6,15 +6,13 @@ no demo link. Its actual app needs only `python3 app.py`. Do not fix these fixtu
 in the main Ship Check repository. The root MIT license still covers the fixture;
 the simulated checklist specifically asks for a project-root license file.
 
-The project repository also has an isolated `codex/demo-broken` branch whose
-root contains exactly this README and app, with no requirements file, LICENSE,
-or demo link. Audit that branch and target demo PRs at that branch. This allows
-the rehearsal to use the same single-repository GitHub grant as Ship Check.
-Do not merge the deliberately broken fixture into the main project branch.
+The isolated `codex/demo-broken` branch originally contained only this README
+and app. Its original commit is `c06d2e26b50b24d6edbe268c1e53850d55876aad`.
+[PR #1](https://github.com/medhansh-19/ship-check/pull/1) repaired that branch after
+owner approval. For another failing rehearsal, create a new test branch from
+the original commit in your own fork, then specify that branch in the audit.
+Do not merge the fixture into the main project branch.
 
-For a separate installation, copy the fixture into a test repository or create
-an isolated demo branch, then name the repository and branch in the audit request.
-The nested folder alone is not an independently cloneable repository.
-
-Use `checklists/sample-project.md` for a deterministic rehearsal. The other two
-checklists are pending source verification, not completed rule extraction.
+A nested fixture folder is not an independently cloneable repository. Use
+`checklists/sample-project.md` for the deterministic rehearsal. The other two
+checklists link to source-backed scout outputs, with their verification limits.

@@ -3,8 +3,12 @@
 Hackathon teams lose points to broken setup instructions and missed submission rules.
 Ship Check puts quoted rules, fresh-clone evidence and human-approved fixes in a Switch room.
 
-**Status:** step-one scaffold. Agent prompts and a standalone template are drafted;
-the live Switch → audit → approval → PR workflow has not been exercised yet.
+**Status:** live workflow verified on 6 November 2026: scout checklist handoff →
+fresh-clone audit → owner approval of fixes 1, 2 and 4 → scoped GitHub App PR →
+owner-approved merge. See [PR #1](https://github.com/medhansh-19/ship-check/pull/1)
+and [the captured audit evidence](examples/audit-evidence/README.md).
+The PR targets the isolated demo branch; its deliberately broken fixture never
+replaces this project's main branch.
 **Demo video:** pending recording and upload.
 
 ```mermaid
@@ -24,9 +28,9 @@ flowchart LR
 ## Local setup
 
 Requires Git and Python 3.10+ with IANA time-zone data (included on macOS). The
-utilities use only Python's standard library. Clone this repository using its
-actual GitHub URL after it is published, then enter the checkout. No Python
-package installation is needed.
+utilities use only Python's standard library. Clone [this repository](https://github.com/medhansh-19/ship-check), then enter the
+checkout. No Python package installation is needed. While the repository is
+private, cloning requires access; publication is a remaining human step.
 
 ```sh
 python3 -m unittest discover -s tests -v
@@ -49,14 +53,16 @@ Snapshots are not overwritten; use a new slug when refreshing. HTML extraction
 removes scripts/styles and normalizes whitespace. It cannot recover content
 rendered only by JavaScript; paste a source-labelled rules file when necessary.
 
-## Set up Switch (next build step)
+## Set up Switch
 
 1. Install [Switch Console for macOS Apple silicon](https://github.com/sandbox-quantum/switch/releases/latest)
    and follow the [official getting-started guide](https://docs.switchagents.ai/switch-rooms/getting-started)
    for its local prerequisites, including Docker Desktop for bundled Mattermost.
 2. Sign in to Codex and confirm the provider is available in Switch Console.
    Link your messaging account so the template can add its creator to the room.
-3. Connect GitHub through Switch with write access to **one test repository**.
+3. Connect GitHub through Switch with write access to **one repository**. The
+   scoped connector requires an HTTPS server address and a configured GitHub App;
+   localhost alone cannot complete it. Review [local setup](switch/LOCAL_SETUP.md).
    Do not rely on shell-profile credentials being available to agents.
 4. Import [ship-check.template.yaml](switch/ship-check.template.yaml) on the
    Console's Templates page. Enter a unique `team` prefix and GitHub `owner/name`.
@@ -74,21 +80,24 @@ if it is required for the demo. `auto_mode: true` allows provider review;
 the business approval gate, which is currently an instruction enforced by the
 auditor. The owner must send explicit numbered approvals in the room.
 
-## Do X, see Y — planned rehearsal
+## Do X, see Y — verified rehearsal
 
-Create a separate test repository from [the broken fixture](examples/README.md),
-and import the template with that test repository's owner/name.
+The isolated `codex/demo-broken` branch now contains the approved repairs. The
+original broken commit is `c06d2e26b50b24d6edbe268c1e53850d55876aad`. For another
+rehearsal, create a new test branch from that commit in your own fork. See
+[the broken fixture notes](examples/README.md). Import the template with
+`medhansh-19/ship-check`; ask the auditor to audit that branch explicitly.
 
 1. Send `@scout check https://www.wemakedevs.org/hackathons/switch`.
    Expect a checklist with source quotes, deadline zones and unresolved questions.
    If the rules are unavailable, supply a saved source. The checked-in Flip the
-   Switch and NEAR examples are pending-verification stubs.
+   Switch and NEAR examples link to the actual scout rehearsal outputs.
 2. For a deterministic fixture test, provide the complete contents of
    [the synthetic checklist](examples/checklists/sample-project.md) in the room.
-   Send `@audit audit https://github.com/OWNER/TEST-REPO using that checklist`.
+   Send `@audit audit https://github.com/medhansh-19/ship-check branch YOUR_FRESH_TEST_BRANCH using that checklist`.
    Expect a fresh clone, the missing-requirements error, missing project-root
-   LICENSE and demo link, advisory scores, and numbered fixes. These are expected
-   results, not a claim that a live audit has happened.
+   LICENSE and demo link, advisory scores, and numbered fixes. These failures were observed in the saved rehearsal; environment-specific
+   failures can differ on another machine.
 3. In the report thread, the owner sends `@audit approve 1, 3` **after checking
    what those IDs mean**. Reject another ID with a reason. Expect only the
    approved edits on a branch and a real PR URL. Include SUBMISSION.md among
@@ -120,10 +129,10 @@ The Python helpers alone do not provide this collaboration.
 | Addressing | Anyone may ask scout; auditor accepts owner and owner's agents |
 | Scoped GitHub connection | Only auditor receives write access to one repository |
 | Exclusive role | Requested `approver` coordination role; not a human authorization mechanism |
-| Template and kickoff | One YAML draft creates both agents and their room |
+| Template and kickoff | One YAML creates both agents and their room |
 
 Switch roles are documented as agent-held leases. Human role assignment is
-unverified; this draft uses the auditor's owner as the sole human approver. A
+unverified; this template uses the auditor's owner as the sole human approver. A
 role never expands access. See [the documented limitation](switch/VERIFICATION.md).
 
 ## Repository map
@@ -132,17 +141,20 @@ role never expands access. See [the documented limitation](switch/VERIFICATION.m
 - `scout/`: scout instructions, saved source inputs and checklist output folder.
 - `audit/`: auditor instructions; fresh clones and logs go in ignored `runs/`.
 - `scripts/`: rules fetcher, deadline converter, report and submission templates.
-- `examples/`: deliberately broken project, synthetic checklist and event stubs.
+- `examples/`: deliberately broken project, synthetic checklist and source-backed event checklists.
 - `tests/`: small offline utility tests, including a local HTTP fetch.
 
 ## Remaining submission work
 
-- [ ] Run scout against both official sources and replace the checklist stubs.
-- [ ] Complete a real fresh-clone audit and owner-approved PR rehearsal.
+- [x] Run scout on both saved official sources and publish its checklists in Switch.
+  Read the source-verification limitations in each generated artifact.
+- [x] Complete a real fresh-clone audit and owner-approved PR rehearsal.
+  [PR #1](https://github.com/medhansh-19/ship-check/pull/1) is merged into the demo branch.
 - [ ] Recreate the room from the template with a fresh team prefix and verify access.
 - [ ] Audit Ship Check itself; review and merge its resulting fixes.
 - [ ] Publish the repository and upload a playable demo; add real URLs here.
-- [ ] Verify official deadline, eligibility and submission requirements with quotes.
+- [x] Extract source-backed deadlines and requirements; see the scout checklists.
+- [ ] Confirm personal eligibility and the final submission form manually.
 - [ ] Complete any optional prize evidence separately from mandatory submission items.
 
 MIT licensed. Never commit secrets, post publicly or submit forms on a teammate's behalf.
