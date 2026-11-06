@@ -55,10 +55,12 @@ them synchronized when editing.
 5. **Rule sources:** event checklists are explicitly pending. Official requirements,
    source deadlines and event-year validity have not been extracted in step one.
 6. **Template validation:** static YAML, field/placeholder checks and instruction
-   synchronization can run locally. Upstream Python lint could not import in the
-   existing environment because `sqlalchemy` is absent. Console import, actual
-   provisioning, room commands, alias addressing and clean-room replay remain
-   untested. No Switch session or external repository was created in this step.
+   synchronization passed. The initial upstream Python lint import lacked
+   `sqlalchemy`; subsequent validation through the running Switch 0.31.0 server
+   returned no errors or warnings. The template is saved locally and visible in
+   Console. Agent provisioning, room commands, alias addressing and clean-room
+   replay remain untested. See [local setup](LOCAL_SETUP.md) for the HTTPS/GitHub
+   connector blocker and the private repository created during setup.
 
 ## Next live checks
 
