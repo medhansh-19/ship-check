@@ -20,6 +20,11 @@ rechecks, an exact-change approval ledger and isolated PR generation. Discord
 reports include owner-only review, audit and PR controls. Repository changes
 invalidate old approvals. See [V2 setup and verification](control/README.md).
 
+Scout's event-specific rules now import into the dashboard automatically, with
+verbatim quotes, source links, applicability and evidence-recording controls.
+The event selector switches between isolated checklists; optional prize rules
+do not reduce general readiness. Both saved event checklists were tested live.
+
 The room completed checklist handoff, a fresh-clone audit, human approval and a
 GitHub App PR limited to one repository. The owner selected fixes 1, 2 and 4,
 including MIT licensing, and deferred the missing-video fix. Only README,

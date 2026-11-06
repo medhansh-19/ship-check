@@ -10,6 +10,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlparse
 from control.engine import Engine
+from control import rules
 
 
 def serve(engine, port=8787, interval=15, notifier=None):
@@ -38,7 +39,10 @@ def serve(engine, port=8787, interval=15, notifier=None):
             if path == "/api/state":
                 event_file = engine.repo / "control/event.json"
                 event = json.loads(event_file.read_text()) if event_file.is_file() else None
-                return self.send(200, dict(**engine.state(), csrf=token, watch_seconds=interval, discord=bool(notifier), event=event))
+                selected = engine.selected_checklist()
+                if event and event.get("checklist") != selected:
+                    event = None
+                return self.send(200, dict(**engine.state(), csrf=token, watch_seconds=interval, discord=bool(notifier), event=event, checklists=rules.available(engine.repo), selected_checklist=selected))
             files = {"/": ("index.html", "text/html"), "/app.js": ("app.js", "text/javascript"), "/style.css": ("style.css", "text/css")}
             if path not in files:
                 return self.send(404, {"error": "Not found"})
@@ -62,6 +66,14 @@ def serve(engine, port=8787, interval=15, notifier=None):
                     result = engine.decide(data["run"], data["fix"], data["decision"], "Local owner")
                 elif path == "/api/pr":
                     result = engine.create_pr(data["run"])
+                elif path == "/api/checklist":
+                    result = engine.select_checklist(data["path"])
+                    if notifier:
+                        notifier(result)
+                elif path == "/api/rule-review":
+                    result = engine.review_rule(data["run"], data["rule"], data["status"], data["evidence"], "Local owner")
+                    if notifier:
+                        notifier(result)
                 else:
                     return self.send(404, {"error": "Not found"})
                 self.send(200, result)

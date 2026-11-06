@@ -69,8 +69,12 @@ def start(engine):
         run = state["run"]
         channel = client.get_channel(channel_id) or await client.fetch_channel(channel_id)
         embed = discord.Embed(title="Ship Check · launch readiness", description=f"**{run['passed']}/{run['total']} checks passed** · `{run['branch']}` · `{run['commit']}`", color=0x17583F)
-        for check in run["checks"]:
-            embed.add_field(name=("PASS · " if check["status"] == "passed" else "BLOCKED · ") + check["title"], value=check["evidence"][:900], inline=False)
+        for check in run["checks"][:18]:
+            embed.add_field(name=(check["status"].replace('_',' ').upper() + " · " + check["title"])[:160], value=check["evidence"][:100], inline=False)
+        if len(run["checks"]) > 18:
+            embed.add_field(name="Additional event requirements", value=f"{len(run['checks']) - 18} more checks with source quotes and verification controls are available in the local dashboard.", inline=False)
+        if run.get("event_rules"):
+            embed.add_field(name="Selected event", value=run["event_rules"]["name"][:256], inline=False)
         embed.set_footer(text=f"Audit {run['id']} · Static checks; event eligibility and playback need human verification.")
         await channel.send(embed=embed, view=Controls(run), allowed_mentions=discord.AllowedMentions.none())
 

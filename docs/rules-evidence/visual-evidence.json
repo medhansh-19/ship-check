@@ -1,0 +1,19 @@
+{
+  "schemaVersion":"uizze.visual-evidence.v1",
+  "platform":"web",
+  "scope":"Scout rule selection, source details and evidence validation; scoped extension of existing V2 dashboard.",
+  "comparison":"existing-system",
+  "sources":[
+    {"path":"../../control/static/index.html","sha256":"8f517e9afd83809ba1e6845f7c85d6c74bc51d50ecf321376d16cf1212b39619"},
+    {"path":"../../control/static/style.css","sha256":"b0480f107498ddb2d5f934c241da84e4ef08d699dc5eda4aaa3b7a8255e46c39"},
+    {"path":"../../control/static/app.js","sha256":"683a0d37b2198a21f5ba885921b33e12cc3e589f41e2b9f0503d1b95bb6e01e3"},
+    {"path":"../../control/rules.py","sha256":"5b4bd59fa6bc92022ec50acb3b948a741e527464de9b08f0231197e35805da3b"},
+    {"path":"../../control/engine.py","sha256":"64fc6646a981d953a3a4d2d0efc228737424b507c0b8c51c4633fee3c256f690"}
+  ],
+  "requiredChecks":[{"id":"event-switch","kind":"interaction"},{"id":"rule-review","kind":"interaction"}],
+  "checks":[
+    {"id":"event-switch","status":"pass","state":"Flip the Switch selected, 58 imported event checks, 5/16 scored checks including repository checks.","environment":{"kind":"browser","name":"Safari","width":1470,"height":835},"observed":"Selector, deadline provenance, readiness and optional-rule separation readable. Switching to NEAR displayed NEAR requirements and removed the Flip deadline; switching back restored the original event.","steps":["Open event selector","Select NEAR","Verify event identity and new checks","Restore Flip the Switch","Inspect readiness and selector"],"artifacts":[{"path":"rules-dashboard.png","kind":"image","sha256":"ccfcb6eab29119c41f639786ccb5f7e1b9fae20477c1c148eb622c60e8db353b"}]},
+    {"id":"rule-review","status":"pass","state":"Original rule quote shown; empty evidence rejected; dialog cancelled.","environment":{"kind":"browser","name":"Safari","width":1470,"height":835},"observed":"Quote, source location, official link and verification result readable. Saving empty evidence shows a clear message and focuses the field. No real eligibility or rule assertion was saved during visual testing.","steps":["Expand source quote","Open Record verification","Attempt save with empty evidence","Inspect inline error","Cancel without recording a result"],"artifacts":[{"path":"rule-review.png","kind":"image","sha256":"cba420dcdb3cc95c7afc09f11ae72b1b68fbbc524c2779611e37014c950f6ecb"}]}
+  ],
+  "unresolved":["Narrow viewport visual verification remains pending, as documented in the original V2 receipt."]
+}

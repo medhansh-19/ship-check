@@ -10,6 +10,10 @@ queue. File changes trigger automatic rechecks. Discord receives reports with
 owner-only buttons to review exact changes, approve or reject, rerun checks and
 create a scoped PR from approved fixes. Decisions become stale when files change.
 
+Scout's event checklists now become dashboard checks automatically. Select an
+event under **Event rules** to inspect each source quote and record verification
+evidence. Mandatory requirements affect readiness; optional prizes stay separate.
+
 ```sh
 python3 -m control.server --repo .
 ```

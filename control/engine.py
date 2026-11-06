@@ -8,6 +8,7 @@ import threading
 from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
+from control import rules
 
 
 def now():
@@ -23,6 +24,39 @@ class Engine:
         self.lock = threading.RLock()
         with self.db() as db:
             db.executescript("CREATE TABLE IF NOT EXISTS runs(id INTEGER PRIMARY KEY, created TEXT, fingerprint TEXT, data TEXT); CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY, created TEXT, kind TEXT, detail TEXT); CREATE TABLE IF NOT EXISTS decisions(run INTEGER, fix TEXT, decision TEXT, actor TEXT, created TEXT, PRIMARY KEY(run,fix)); CREATE TABLE IF NOT EXISTS pull_requests(run INTEGER PRIMARY KEY, url TEXT);")
+            db.executescript("CREATE TABLE IF NOT EXISTS settings(key TEXT PRIMARY KEY,value TEXT); CREATE TABLE IF NOT EXISTS rule_reviews(fingerprint TEXT, rule TEXT, status TEXT, evidence TEXT, actor TEXT, PRIMARY KEY(fingerprint,rule));")
+
+    def selected_checklist(self):
+        with self.db() as db:
+            selected = db.execute("SELECT value FROM settings WHERE key='checklist'").fetchone()
+        if selected:
+            return selected[0] or None
+        event_path = self.repo / "control/event.json"
+        event = json.loads(event_path.read_text()) if event_path.is_file() else {}
+        return event.get("checklist")
+
+    def select_checklist(self, path):
+        with self.lock:
+            if path:
+                rules.load(self.repo, path)
+            with self.db() as db:
+                db.execute("INSERT OR REPLACE INTO settings VALUES('checklist',?)", (path,))
+            return self.audit("Scout checklist selected")
+
+    def review_rule(self, run_id, rule_id, status, evidence, actor):
+        if status not in ("passed", "blocked", "not_applicable") or not isinstance(evidence, str) or not 10 <= len(evidence.strip()) <= 3000:
+            raise ValueError("Choose a result and provide at least 10 characters of supporting evidence.")
+        with self.lock:
+            run = self.state()["run"]
+            if not run or run["id"] != int(run_id) or run["fingerprint"] != self.fingerprint():
+                raise ValueError("Audit changed. Refresh before verifying rules.")
+            item = next((c for c in run["checks"] if c["id"] == rule_id), None)
+            if not item or not rule_id.startswith("event:") or not item.get("quote"):
+                raise ValueError("Rule has no verifiable quoted source.")
+            with self.db() as db:
+                db.execute("INSERT OR REPLACE INTO rule_reviews VALUES(?,?,?,?,?)", (run["fingerprint"], rule_id, status, evidence.strip(), actor))
+            self.event("rule_review", f"{actor} recorded {status} for {rule_id}: {evidence.strip()}")
+            return self.audit("Rule evidence updated")
 
     @contextmanager
     def db(self):
@@ -39,6 +73,7 @@ class Engine:
     def fingerprint(self):
         files = self.git("ls-files", "--cached", "--others", "--exclude-standard").splitlines()
         digest = hashlib.sha256(self.git("rev-parse", "HEAD").encode())
+        digest.update((self.selected_checklist() or "").encode())
         for name in sorted(files):
             path = self.repo / name
             if path.is_file() and not path.is_symlink():
@@ -80,12 +115,24 @@ class Engine:
             if self.demo_url:
                 urls.append(self.demo_url)
             check("video", "Demo video URL", bool(urls), "Video URL found: " + urls[0] + ". Playback requires human verification." if urls else "No supported video URL in README or SUBMISSION.md. Add YouTube, Loom or Vimeo.")
-            passed = sum(c["status"] == "passed" for c in checks)
-            data = dict(repo=self.repo.name, branch=self.git("branch", "--show-current"), commit=self.git("rev-parse", "--short", "HEAD"), checks=checks, passed=passed, total=len(checks), score=round(passed / len(checks) * 100), reason=reason, scope="Static repository checks. Setup execution, event rules, eligibility and video playback require separate evidence.")
+            event_rules = rules.load(self.repo, self.selected_checklist())
+            if event_rules:
+                with self.db() as db:
+                    reviews = {r[0]:r[1:] for r in db.execute("SELECT rule,status,evidence,actor FROM rule_reviews WHERE fingerprint=?", (fingerprint,))}
+                for item in event_rules["rules"]:
+                    if item["id"] in reviews:
+                        status, evidence, actor = reviews[item["id"]]
+                        item.update(status=status, evidence=evidence, reviewed_by=actor)
+                        if item["requirement"] == "conditional":
+                            item["scored"] = status != "not_applicable"
+                    checks.append(item)
+            scored = [c for c in checks if c.get("scored", True) and c["status"] != "not_applicable"]
+            passed = sum(c["status"] == "passed" for c in scored)
+            data = dict(repo=self.repo.name, branch=self.git("branch", "--show-current"), commit=self.git("rev-parse", "--short", "HEAD"), checks=checks, event_rules={k:v for k,v in event_rules.items() if k != "rules"} if event_rules else None, passed=passed, total=len(scored), score=round(passed / len(scored) * 100), reason=reason, scope="Repository checks plus the selected event's mandatory rules. Quoted rules need owner-recorded evidence; optional items do not lower readiness.")
             with self.db() as db:
                 cursor = db.execute("INSERT INTO runs(created,fingerprint,data) VALUES(?,?,?)", (now(), fingerprint, json.dumps(data)))
                 run_id = cursor.lastrowid
-            self.event("audit", f"{reason}: {passed}/{len(checks)} checks passed (run {run_id}).")
+            self.event("audit", f"{reason}: {passed}/{len(scored)} scored checks passed; {len(checks)} total checks (run {run_id}).")
             return self.state()
 
     def state(self):

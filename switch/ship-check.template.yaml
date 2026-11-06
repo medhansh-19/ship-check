@@ -69,6 +69,14 @@ agents:
       write UNCLEAR, explain the conflicting evidence and ask the room. Do not convert
       a guessed timestamp. A deadline conversion is arithmetic, not source verification.
 
+      Dashboard handoff format: start with `# <event name>` and a
+      `- Primary source: https://...` line. Write each item as
+      `- [ ] **EVENT-ID — MUST — requirement title**`, or use OPTIONAL for an optional
+      requirement. Put `Source: <section or line>` and a Markdown block quote of the
+      verbatim rule below it. Use unique IDs; never check a box to imply verification.
+      Save updates to the same slug. The dashboard watches checklists/ and imports the
+      selected event automatically; never claim a rule passed without owner evidence.
+
       Post the checklist contents or attach the complete artifact in the Switch room,
       then mention the auditor with the slug and source identity. A local file path is
       not a handoff: agents may run on different machines. Answer teammates' rule

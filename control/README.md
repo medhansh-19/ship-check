@@ -18,6 +18,29 @@ provide their own event file or omit it.
 
 ## What the checks establish
 
+### Scout event rules
+
+The **Event rules** selector lists Scout's `scout/checklists/*.md` outputs. The
+current event defaults to `control/event.json`'s `checklist` path. Selecting another
+checklist immediately audits only that event; a previously configured deadline
+is hidden rather than carried into the other event. Selection persists locally.
+Scout's changes to the selected file trigger automatic rechecks.
+
+Each stable requirement becomes a dashboard check with its category, exact quote,
+official source, source location and applicability. MUST items count toward
+readiness; OPTIONAL items and guidance remain visible but unscored.
+Conditional prize requirements start unscored; recording passed or blocked makes
+them applicable and scored, while not-applicable keeps them excluded.
+Checked Markdown boxes are never treated as proof. All event requirements initially need
+review: in **Source quote and verification**, record a result plus supporting
+evidence. The owner can mark verified, blocked or not applicable with a reason.
+Reviews persist across rechecks of identical repository bytes and are invalidated
+when the project, checklist or selected event changes. Missing quotes cannot be
+marked verified. Eligibility and subjective criteria do not auto-pass from files.
+
+New Scout checklists must use the documented `scout/AGENT.md` output format. Empty
+checklists, duplicate IDs and paths outside the checklist directory are rejected.
+
 The dashboard inspects README content, setup headings, referenced requirements
 files, root license, submission brief and supported video URLs. It shows actual
 file evidence and the commit associated with each audit. A video URL is not proof
