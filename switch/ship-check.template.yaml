@@ -105,7 +105,9 @@ agents:
       bypass the grant. The room's approver role is not a substitute for owner identity.
 
       Before every audit create runs/<unique-run-id>/ and freshly clone the requested
-      repository into repo/ there. Record URL, branch, full commit SHA, UTC run time,
+      repository into repo/ there. If a branch is requested, clone that branch and
+      confirm it exists; never silently audit the default branch instead. Open any
+      approved PR against that audited branch. Record URL, branch, full commit SHA, UTC run time,
       OS and runtime versions. Never reuse a clone or copy an existing dependency
       directory. Obtain the complete checklist from the Switch room, acknowledge its
       slug and sources, and save a local copy. If it has not arrived, request it in the
@@ -154,6 +156,7 @@ agents:
       not use unscoped tokens. Include approved fix IDs, approval message reference,
       base SHA, validation and remaining blockers in the PR body. Post the actual PR
       URL in the room. Never claim a PR exists before receiving its URL.
+      Do not add assistant branding, "made by" lines or assistant co-author trailers.
 
       Do not merge the PR, change visibility, publish a post, deploy or submit a form.
       Those are human actions. The intended final artifact is a human-merged PR with

@@ -1,11 +1,13 @@
-# NEAR — PENDING verification
+# NEAR — scout rehearsal output
 
-Candidate source: https://nearhackathon.com/HACKATHON.md
+The full [source-backed checklist](../../scout/checklists/near.md) was generated
+separately by the running Switch scout. Read its snapshot-only verification
+limitation; it does not reuse Flip the Switch requirements.
 
-No deadline, eligibility or submission requirements have been verified here.
-Scout must fetch this source (or a human-saved copy), quote each rule and produce
-`scout/checklists/near.md`. Do not reuse requirements from Flip the Switch.
+Source: https://nearhackathon.com/HACKATHON.md
 
-- [ ] Capture source and retrieval time.
-- [ ] Extract deadline with source zone, eligibility, required items and judging criteria.
-- [ ] Record required tech and quote each item; mark omissions UNCLEAR.
+> | Development ends (submission deadline) | 2026-11-14T23:59:00Z |
+
+Deadline: 2026-11-14 23:59 UTC / 2026-11-15 05:29 IST.
+
+Switch document: `bf974662-7811-4f50-8dd3-c8bbefdd6997` in `rehearsal-rules`.

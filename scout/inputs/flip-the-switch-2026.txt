@@ -1,0 +1,232 @@
+Flip the Switch Hackathon | WeMakeDevs x DevTools Academy x Switch
+×
+ChallengePrizesTracksJudgingFAQ
+Sign inRegister now
+ChallengePrizesTracksJudgingFAQRegister now
+Starts in 0 days, 0 hours
+Flip the Switch Hackathon
+Powered by
+Take an AI agent you already use, Claude Code, Codex, Cursor, OpenCode and Antigravity, connect it to Slack, Teams, Discord and Telegram with Switch, and build a workflow where it gets real work done with your teammates.
+$10,000in prizes
+Register nowStar Switch on GitHub
+Looking for a team, or stuck on setup? The WeMakeDevs Discord is open for the whole event.
+Registration
+Loading…
+One moment. Pulling up this hackathon.
+Star the Switch repo for a chance to win a Keychron keyboard.
+Star the repoJoin the Discord
+Claude CodeTerminal · laptop$ claude
+CodexTerminal · laptop$ codex
+Release AgentLangChain · serverrunning on ops-01
+Switch off
+Members
+PPriya
+SSam
+AAlex
+CClaude Code
+XCodex
+RRelease Agent
+# incidents
+S
+Sam
+@Claude Code checkout is failing since this morning. Can you look?
+C
+Claude CodeAgent
+@Release Agent logs show 500s from cart-service since 09:42. Which deploy went out then?
+R
+Release AgentAgent
+@Priya v2.14.0 at 09:40. Rollback to v2.13.2 is ready, needs your sign-off.
+P
+Priya
+Approved. Roll it back.
+Room
+History
+Rules
+Tasks
+Decisions
+Works with Slack · Microsoft Teams · Discord · Mattermost
+WhenNov 4–7, 2026
+WhereOnline, from anywhere
+TeamsSolo or up to 4 people
+Prize pool$10,000
+OverviewResourcesScheduleRules
+01 / The challenge
+Turn your solo agent into a teammate
+Build a workflow where an AI agent and the people in a team chat get a real task done together.
+An AI agent
+One you already use is fine
+Your team
+In Slack, Teams, Discord or Mattermost
+Switch
+Connects the two
+A real task, done
+Shipped, fixed, reviewed
+Meet Switch
+Open source infrastructure for putting AI agents into team chat. Every channel becomes a room, and agents join it like any other teammate.
+Your team chat
+Slack
+Teams
+Discord
+Telegram
+Mattermost
+Each channel becomes a room, and agents show up in it with their own name and avatar.
+Room
+A shared log of messages, instructions, roles, tasks and knowledge. Every person and agent in the channel reads from the same one.
+Agent protocol. Server-sent events in, HTTP out. Any agent that speaks it can join a room, whatever it was built with.
+Your agents
+Claude Code
+Codex
+OpenCode
+Anything else via the protocol
+Switch Console. The desktop app. It runs your agents, starts a local server in Docker and connects your chat apps.Switch ships no agents and no models, and it doesn't replace your chat app. You bring both, and Switch connects them.
+Browse resources10-minute quickstart
+triage-pair.template.yamlView on GitHub
+agents: - name: "{team}-triager" description: Reads reports, files and routes them addressing: anyone provider: "{provider}" instructions: | You are the triager of a small team. For each report: 1. Restate it in one line. 2. Decide whether it is a bug, a question, or a request. 3. Bugs go to the reproducer, by name. - name: "{team}-repro" description: Reproduces what the triager routes to it addressing: owner-agents provider: "{provider}" instructions: | Write the smallest script that shows the problem, run it, and report back in the same thread with the exact output.room: name: "{team}-triage" bridge: "{bridge}" agents: ["{team}-triager", "{team}-repro"] users: ["{$creator}"]kickoff: | @{team}-triager and @{team}-repro: this is your triage room.
+A template from the Switch repo. Console reads it and creates two agents and a room with you in it: the triager sorts incoming reports and hands bugs to the reproducer.
+02 / Prizes
+What you can win
+Total prize pool
+$0$10,000
+Cash across the three tracks and Code with Wispr, plus AirPods 5 for the best blog, Logitech mechanical keyboards for the best #HowISwitch posts, swag for 20 projects picked at random, and a certificate for everyone who submits.
+Track 01
+$2,000in cash
+Best Business Workflow
+For the most practical workflow where people and AI agents get work done.
+Track 02
+$2,000in cash
+Best Personal or Creative Workflow
+For the best use of Switch and AI agents on everyday tasks, personal projects or creative ideas.
+Track 03
+$100 × 20in cash
+Best Core Contribution
+For the top 20 pull requests to Switch's open source core.
+Side track
+$500in cash
+Code with Wispr
+For the best project built by voice with Wispr Flow. Submit your Wispr usage scorecard with it.
+Side track
+AirPods 5
+Best Blog
+For the best blog post about building with Switch.
+Top 5 posts
+Logitech keyboard
+#HowISwitch
+Share your build on social media with #HowISwitch. The top 5 posts each get a Logitech mechanical keyboard shipped to them.
+20 projects
+Swag
+Random draw
+20 project submissions, picked at random, get swag shipped to them.
+Everyone
+Certificate
+Every submission
+Every project gets a certificate, win or not.
+Winning projects are also showcased across the Switch, WeMakeDevs and DevTools Academy channels.
+03 / Tracks
+Three tracks and two side tracks
+Three tracks, for builders and contributors alike. Code with Wispr and Best Blog are open to everyone on top of them.
+01
+Track 01$2,000
+Best Business Workflow
+Help people and AI agents get work done.
+Build a practical workflow using Switch to help people and AI agents get work done. Open to technical and nontechnical participants, with any combination of people, agents, and rooms.
+02
+Track 02$2,000
+Best Personal or Creative Workflow
+Switch for everyday life and creative work.
+Show how you use Switch and AI agents to simplify everyday tasks, manage personal projects, or bring creative ideas to life.
+03
+Track 03$100 × 20
+Best Core Contribution
+Make Switch itself better.
+Improve Switch's core open source functionality through a meaningful code contribution. This could include new capabilities, performance improvements, reliability, or developer experience. There are issues created for integrations and extensions too. The top 20 pull requests win $100 each. See how to get an issue assigned.
+Side trackAirPods 5
+Best Blog
+Write the best blog post about your build.
+Publish a blog post about building with Switch. The best post wins a pair of AirPods 5. Walk through what you made, how you set it up and what you learned along the way. You can enter this alongside a track or on its own.
+Side track$500
+Code with Wispr
+Build your Switch project by voice.
+Use Wispr Flow to speak your prompts, agent instructions and docs instead of typing them. The best project built by voice wins $500. Enter it alongside any track.
+Get 1 month of Wispr Flow Pro free
+1Get Wispr Flow with the button below. Your link includes 1 month of Wispr Flow Pro free.
+2Create your account and dictate as you build: prompts to your coding agent, your room's instructions, your README.
+3When you submit your project, add your Wispr usage scorecard, a screenshot from Insights in the Wispr Flow desktop app.
+Track 03: Best Core Contribution
+Get assigned before you write code
+Start today. You don't have to wait for the hackathon to begin: get assigned and start working on issues now. You can have up to 5 pull requests open at once, so pick only what you will finish.
+01Browse the open issues labelled hackathon and pick one you want to solve.
+02Comment on it, tag @petr-sandbox and say in a line or two how you plan to solve it.
+03Wait until you are assigned, then start. Read CONTRIBUTING.md first: it covers the dev setup and the one-time contributor agreement (CLA) you sign on your first pull request.
+04Open your pull request and link the issue in its description with Closes #number.
+Browse open issues
+Rules
+Only issues labelled hackathon count for this track.
+One person per issue. If it is already assigned, or someone asked for it first, pick another.
+You can have up to 5 pull requests open at a time, each for an issue assigned to you.
+Don't spam. Ask only for issues you will actually work on, and make every pull request a real fix. Spam gets you removed from the track.
+A pull request for an issue that isn't assigned to you won't be judged.
+You can start today. You don't have to wait for November 4, but your pull request must be open by November 7, 11:59 PM IST.
+If an assigned issue sees no activity for 48 hours, it may be handed to someone else.
+Low-effort pull requests, such as typo fixes, formatting or unreviewed AI output, won't be judged.
+04 / Judging
+What the judges are looking for
+0%Use of SwitchIs Switch central, and would the project stop working without it?
+0%Technical executionDoes it run, and could someone clone the repo and reproduce it?
+0%Creativity and impactIs it a fresh idea that solves a problem a real team has?
+0%PresentationDo the demo video and README make clear how Switch is used?
+How the tracks are judged
+1
+Every submission
+Reviewed by WeMakeDevs
+2
+Shortlist
+Put together by WeMakeDevs
+3
+Finalists
+Judged by Switch, DevTools Academy and WeMakeDevs
+Judged on their own terms
+Best Core ContributionThe 10 most useful, best-built pull requests
+Best BlogClarity, accuracy, and how much it helps a first-time Switch user
+05 / FAQ
+Got questions?
+Where are the docs and resources?
+All of them are on the Resources tab: the quickstart, Switch Console, the docs, the agent protocol, worked examples and where to get help. If you open only one link, make it the quickstart, which gets an agent answering you in a chat channel in about ten minutes.
+All resources
+10-minute quickstart
+Docs
+GitHub
+When does the hackathon run?
+From November 4, 12:01 AM IST to November 7, 11:59 PM IST. Submissions close at 11:59 PM IST on November 7. The kickoff live stream is earlier, on November 2 at 3:30 PM UK time. The schedule tab shows it in your own time zone.
+Who can participate?
+Anyone, from anywhere. It is free to enter, and you can take part solo or in a team of up to four.
+What exactly do I have to build?
+A workflow in a team chat where at least one AI agent and one person get a real task done together, connected through Switch. You don't have to build a chatbot or a new agent from scratch, because Switch works with agents that already exist.
+Is Switch mandatory?
+Yes. Switch has to be central to your project, and your README should show how you used it.
+Does Switch cost anything?
+No. Switch is open source and free to self-host, including on your own laptop. You bring your own AI agent, so you will need a subscription or an API key for whichever one you use.
+What do I need to get started?
+Switch Console, which is the desktop app, Docker to run Switch on your own machine, and an AI coding agent such as Claude Code, Codex or OpenCode. The quickstart takes about ten minutes. Console runs on macOS, with Windows and Linux builds in early access.
+Do I need a Slack workspace or admin access?
+No. When you run Switch on your own machine it comes with Mattermost, a free chat app, so you can build and record your demo without access to any company workspace. Slack, Microsoft Teams, Discord and Telegram can be connected whenever you want them.
+Which agents can I use?
+Any of them. Claude Code, Codex and OpenCode work out of the box through Switch Console, and custom agents built with LangChain, Google ADK, OpenAI or anything else can join through the agent protocol.
+Can I bring an agent I've already built?
+Yes, and we want you to. Existing agents, libraries and templates are fine. The Switch setup and the workflow your agents run need to be built during the hackathon.
+Can I use AI coding tools?
+Yes. You should understand what you submit and be able to explain how it works.
+Can I enter more than one track?
+Yes. You can build a workflow, send pull requests to Switch's core and publish a blog post in the same hackathon. Code with Wispr and Best Blog are open on top of any track.
+Where do I get help?
+In the WeMakeDevs Discord. The Switch, WeMakeDevs and DevTools Academy teams are there for the whole event.
+This event is hosted by WeMakeDevs and DevTools Academy.
+Helping great developer tools reach the builders who will shape the future.
+Keep in touch
+Developers
+HackathonsMeetupsScholarshipsEvent CalendarFeedback
+Businesses
+PartnersContact Us
+Company
+BlogCareersCode of ConductPrivacy PolicyTerms of Service
+© 2026 WeMakeDevs. All rights reserved.
+Cookie preferencesllms.txt
