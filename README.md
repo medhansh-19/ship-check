@@ -6,10 +6,11 @@ Ship Check is the real Switch workflow being demonstrated.
 
 ## Setup
 
-Requires Python 3.10+.
+Requires Python 3.10+. This app uses only the Python standard library; no
+third-party packages need to be installed. Run these commands from the
+repository root.
 
 ```sh
-python3 -m pip install -r requirements.txt
 python3 app.py list
 python3 app.py summary
 ```
@@ -27,5 +28,7 @@ python3 -m unittest discover -s tests -v
 
 ## Demo disclosure
 
-The missing requirements file, task-summary bug and absent submission artifacts
-are intentional. Do not claim this fixture is eligible or submission-ready.
+This fixture began with a broken setup command, a task-summary bug and absent
+submission artifacts. The setup and counting issues are repaired; submission
+evidence remains incomplete. Do not claim this fixture is eligible or
+submission-ready.
